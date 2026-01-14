@@ -1,9 +1,11 @@
 <h1>LF10-Starter</h1>
 Wenn Sie in der EmployeeListComponent.ts ein gültiges Bearer-Token eintragen, sollten hier die Namen der in der Datenbank gespeicherten Mitarbeiter angezeigt werden!
 <ul>
-  @for(e of employees$ | async; track e.id) {
+  @for (e of employees$ | async; track e.id) {
     <li>
-      {{e.lastName }}, {{e.firstName}}
+      {{ e.lastName }}, {{ e.firstName }}
     </li>
   }
+<!-- Button redirect fix, employee-overview.components.ts no valid redirect -->
+  <button onclick="window.location.href='employee-overview.components.ts'">Mitarbeiter-Übersicht</button>
 </ul>
