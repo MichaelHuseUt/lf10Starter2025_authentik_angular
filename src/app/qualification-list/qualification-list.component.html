@@ -1,0 +1,13 @@
+<p>qualification-list works!</p>
+
+<button (click)="getSkills()">fetch</button><br>
+<input type="text" #skillInput>
+<button (click)="addSkill(skillInput.value)">add Skill</button>
+<br>
+
+
+@for(e of qualifications$ | async; track e.id) {
+  <li>
+    {{e.id }}, {{e.skill}}
+  </li>
+}
