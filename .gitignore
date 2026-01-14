@@ -40,7 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# dockerjank & co
-compose.yml
-.gitignore
