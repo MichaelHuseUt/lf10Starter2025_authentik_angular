@@ -22,24 +22,34 @@ export class QualificationListComponent {
     private authService: AuthService
   ) {
     this.qualifications$ = of([]);
-    this.getSkills();
+    this.getQualificationList();
   }
+  addQualification(newQualification: string): void {
 
-  addSkill(skill: string): void {
-    console.log(skill);
-    if (skill.trim()) {
-      const token = this.authService.getAccessToken();
-      this.http.post<Qualification>('http://localhost:8089/qualifications',
-        {skill: skill},
-        {
-          headers: new HttpHeaders()
-            .set('Content-Type', 'application/json')
-            .set('Authorization', `Bearer ${token}`)
-        }).subscribe((_oOR) => this.getSkills());
+    if (newQualification.trim()) {
+
+      this.qualifications$.subscribe((qualificationList) => {
+
+        if(qualificationList.every(qualification => {
+          return qualification.skill?.toLowerCase() !== newQualification.toLowerCase();
+        })) {
+
+          const token = this.authService.getAccessToken();
+            this.http.post<Qualification>('http://localhost:8089/qualifications',
+              {skill: newQualification},
+              {
+                headers: new HttpHeaders()
+                  .set('Content-Type', 'application/json')
+                  .set('Authorization', `Bearer ${token}`)
+              }).subscribe((_oOR) => {
+              this.getQualificationList();
+            });
+        }
+      })
     }
   }
 
-  getSkills() {
+  getQualificationList() {
     const token = this.authService.getAccessToken();
     this.qualifications$ = this.http.get<Qualification[]>('http://localhost:8089/qualifications', {
       headers: new HttpHeaders()
