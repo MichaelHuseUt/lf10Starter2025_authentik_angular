@@ -8,6 +8,6 @@
 
 @for(e of qualifications$ | async; track e.id) {
   <li>
-    {{e.id }}. {{e.skill}}
+    {{e.id }}. {{e.skill}} <button (click)="deleteQualification(e.id)">Delete</button>
   </li>
 }

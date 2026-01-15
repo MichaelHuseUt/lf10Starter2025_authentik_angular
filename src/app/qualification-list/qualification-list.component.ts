@@ -57,4 +57,19 @@ export class QualificationListComponent {
         .set('Authorization', `Bearer ${token}`)
     });
   }
+
+  deleteQualification(id: number | undefined): void {
+    if (id === undefined) {
+      return;
+    }
+
+    const token = this.authService.getAccessToken();
+    this.http.delete(`http://localhost:8089/qualifications/${id}`, {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+    }).subscribe((_oOR) => {
+      this.getQualificationList();
+    });
+  }
 }
