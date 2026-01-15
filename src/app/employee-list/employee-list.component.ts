@@ -4,11 +4,12 @@ import { Observable, of } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Employee } from "../Employee";
 import {AuthService} from "../../service/auth/auth.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
