@@ -1,0 +1,10 @@
+.qualification-list-root {
+  margin: 0;
+  padding: 0;
+}
+
+.controls { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+
+ul { margin: 0; padding-left: 18px; }
+
+li { margin-bottom: 6px; }
