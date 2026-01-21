@@ -1,7 +1,13 @@
 <p>employee-overview works!</p>
 <section class="filter">Filter (Platzhalter)</section>
 
-<button>TODO</button>
+<button class="button-add" (click)="openPopUp()">+</button>
+
 <section class="employee-list">
   <app-employee-list></app-employee-list>
 </section>
+
+@if (addEmployeeModalIsOpen) {
+  <app-add-employee (closePopup)="closePopUp()">
+  </app-add-employee>
+}

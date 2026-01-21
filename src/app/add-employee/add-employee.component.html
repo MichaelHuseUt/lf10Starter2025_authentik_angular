@@ -1,1 +1,36 @@
-<p>add-employee works!</p>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closePopup.emit()">&times;</span>
+
+    <form>
+      <label>Vorname </label>
+      <br/>
+      <input type="text" #firstnameInput/>
+      <br/>
+      <label>Nachname </label>
+      <br/>
+      <input type="text" #lastnameInput/>
+      <br/>
+      <label>Straße </label>
+      <br/>
+      <input type="text" #streetInput/>
+      <br/>
+      <label>Postleitzahl </label>
+      <br/>
+      <input type="number" #postcodeInput/>
+      <br/>
+      <label>Stadt </label>
+      <br/>
+      <input type="text" #cityInput/>
+      <br/>
+      <label>Telefonnummer </label>
+      <br/>
+      <input type="text" #phonenumberInput/>
+      <br/><br/>
+      <button (click)="addEmployee(firstnameInput.value, lastnameInput.value, streetInput.value,
+                                    postcodeInput.value, cityInput.value, phonenumberInput.value)">
+        submit
+      </button>
+    </form>
+  </div>
+</div>

@@ -31,10 +31,6 @@ export class EmployeeListComponent {
     this.fetchData();
   }
 
-  addEmployee(newEmployee: Employee): void {
-
-  }
-
   fetchData() {
     const token = this.authService.getAccessToken();
     this.http.get<Employee[]>('http://localhost:8089/employees', {
