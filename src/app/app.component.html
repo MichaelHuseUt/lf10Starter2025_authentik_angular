@@ -1,2 +1,26 @@
-<router-outlet></router-outlet>
+<div class="app-root">
+  <aside class="sidebar">
+    <div class="logo">LOGO</div>
+    <nav class="nav">
+      <a routerLink="/employees" routerLinkActive="active" class="nav-item">Mitarbeiter</a>
+      <a routerLink="/qualifications" routerLinkActive="active" class="nav-item">Qualifikationen</a>
+    </nav>
+  </aside>
 
+  <main class="main">
+    <!-- Employee header only on /employees -->
+    <section *ngIf="showEmployeeHeader" class="employee-header">
+      <h2>LF10-Starter</h2>
+      <p>Wenn Sie in der EmployeeListComponent.ts ein gültiges Bearer-Token eintragen, sollten hier die Namen der in der Datenbank gespeicherten Mitarbeiter angezeigt werden!</p>
+    </section>
+
+    <section class="filter">Filter (Platzhalter)</section>
+    <section class="content-area">
+      <div class="lower-box">
+        <div class="router-anchor">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

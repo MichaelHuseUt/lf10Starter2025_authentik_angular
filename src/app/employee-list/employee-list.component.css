@@ -1,0 +1,58 @@
+/* Make the component host transparent in the layout so it doesn't add extra spacing */
+:host {
+  display: contents;
+}
+
+.employee-list-root { height: 100%; display: flex; flex-direction: column; margin: 0; padding: 0; }
+
+.employee-list-root h1 { margin: 0 0 8px 0; }
+.employee-list-root .hint { color: #666; margin: 0 0 12px 0; }
+
+.table-wrapper { flex: 1; display: flex; flex-direction: column; margin: 0; padding: 0; min-height: 0; }
+.employee-table { width: 100%; border-collapse: collapse; margin: 0; padding: 0; }
+.employee-table thead { position: sticky; top: 0; background: #fff; z-index: 5; }
+.employee-table thead th { border: 2px solid #000; padding: 8px; background: #fff; text-align: left; }
+.employee-table tbody td { border: 1px solid #000; padding: 8px; }
+.employee-table tbody tr { background: #fff; }
+
+/* ensure table area can scroll if many rows */
+.table-wrapper { overflow: auto; }
+
+.ctx-btn { background: transparent; border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; }
+.ctx-menu { position: absolute; right: 0; top: 28px; background: #fff; border: 1px solid #ccc; padding: 6px; display: flex; flex-direction: column; gap: 4px; z-index: 20; }
+
+.delete-btn { background: #fff; border: 2px solid #000; padding: 6px 10px; cursor: pointer; }
+
+/* ensure small responsiveness */
+@media (max-width: 800px) {
+  .employee-table thead { display: none; }
+}
+
+.ctx-cell { position: relative; }
+
+
+.modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  border: 2px solid #000;
+  padding: 18px;
+  width: 360px;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+}
+.modal h3 { margin: 0 0 8px 0; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.btn { padding: 8px 12px; cursor: pointer; }
+.btn-cancel { background: #fff; border: 2px solid #666; }
+.btn-confirm { background: #e53935; color: #fff; border: none; }

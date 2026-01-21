@@ -3,16 +3,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 import {AuthService} from "../../service/auth/auth.service";
 import {Qualification} from "../Qualification";
-import {AsyncPipe} from "@angular/common";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-qualification-list',
   standalone: true,
-  imports: [
-    AsyncPipe
-  ],
+  imports: [CommonModule],
   templateUrl: './qualification-list.component.html',
-  styleUrl: './qualification-list.component.css'
+  styleUrls: ['./qualification-list.component.css']
 })
 export class QualificationListComponent {
   qualifications$: Observable<Qualification[]>;

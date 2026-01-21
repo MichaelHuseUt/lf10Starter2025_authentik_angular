@@ -1,15 +1,28 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import {EmployeeListComponent} from "./employee-list/employee-list.component";
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, EmployeeListComponent, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'lf10StarterNew';
+  showEmployeeHeader = false;
+
+  constructor(private router: Router) {
+
+    this.showEmployeeHeader = this.router.url.startsWith('/employees');
+
+
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd)
+    ).subscribe(event => {
+      this.showEmployeeHeader = event.urlAfterRedirects.startsWith('/employees');
+    });
+  }
 }
