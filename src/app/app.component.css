@@ -71,14 +71,7 @@
   gap: 24px;
 }
 
-.filter {
-  height: 120px;
-  background: var(--muted);
-  border: 6px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .content-area {
   flex: 1;
@@ -89,8 +82,6 @@
 
 .lower-box {
   flex: 1;
-  border: 6px solid #000;
-  padding: 12px;
   box-sizing: border-box;
   background: #fff;
   display: flex;

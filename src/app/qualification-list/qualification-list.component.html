@@ -1,13 +1,17 @@
 <div class="qualification-list-root">
   <p>qualification-list works!</p>
 
+
+  Filter: <input type="text" #filterInputElement (keyup)="filterQualificationByUserInput(filterInputElement.value)">
+  <br>
+
   <button (click)="getQualificationList()">fetch</button><br>
   <input type="text" #skillInput>
   <button (click)="addQualification(skillInput.value)">add Skill</button>
   <br>
 
   <ul>
-    <li *ngFor="let e of qualifications$ | async">
+    <li *ngFor="let e of filteredQualificationList$ | async">
       {{e.id }}. {{e.skill}} <button (click)="deleteQualification(e.id)">Delete</button>
     </li>
   </ul>

@@ -1,0 +1,23 @@
+.filter {
+  height: 120px;
+  background: var(--muted);
+  border: 6px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.qualification-list {
+  flex: 1;
+  border: 6px solid #000;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  min-height: 0;
+  position: relative;
+}
+
