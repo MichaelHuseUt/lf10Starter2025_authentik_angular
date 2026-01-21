@@ -18,7 +18,7 @@ export class AddEmployeeComponent {
   @Output() closePopup: EventEmitter<void> = new EventEmitter();
 
   addEmployee(firstname: string, lastname: string, street: string,
-              postcode: string, city: string, phonenumber: string): void {
+              postcode: string, city: string, phoneNumber: string): void {
 
 
 
