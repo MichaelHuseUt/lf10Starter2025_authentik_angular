@@ -87,7 +87,6 @@
 }
 
 
-
 .lower-box {
   flex: 1;
   border: 6px solid #000;
@@ -102,7 +101,6 @@
 }
 
 
-
 .lower-box > * {
   flex: 1 1 auto;
   min-height: 0;
@@ -112,7 +110,6 @@
   flex-direction: column;
   justify-content: flex-start;
 }
-
 
 
 .router-anchor {
@@ -126,7 +123,6 @@
   flex-direction: column;
   gap: 12px;
 }
-
 
 
 .lower-box > router-outlet, .router-anchor > router-outlet {
@@ -145,7 +141,42 @@
 
 
 @media (max-width: 800px) {
-  .app-root { flex-direction: column; }
-  .sidebar { width: 100%; flex-direction: row; gap: 8px; }
-  .nav { flex-direction: row; }
+  .app-root {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .nav {
+    flex-direction: row;
+  }
+}
+
+
+.button-add {
+  width: 40px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #18181a;
+  background: #fff;
+  border-radius: 8px;
+  color: #18181a;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.button-add:hover {
+  background-color: #18181a;
+  color: #fff;
 }

@@ -33,7 +33,6 @@ export class EmployeeListComponent {
 
   addEmployee(newEmployee: Employee): void {
 
-
   }
 
   fetchData() {
