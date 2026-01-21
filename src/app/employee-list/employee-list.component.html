@@ -1,10 +1,50 @@
-<h1>LF10-Starter</h1>
-Wenn Sie in der EmployeeListComponent.ts ein gültiges Bearer-Token eintragen, sollten hier die Namen der in der Datenbank gespeicherten Mitarbeiter angezeigt werden!
-<ul>
-  @for (e of employees$ | async; track e.id) {
-    <li>
-      {{ e.lastName }}, {{ e.firstName }}
-    </li>
-  }
-  <a routerLink="/qualifications">Qualifications-List</a>
-</ul>
+<div class="employee-list-root">
+
+
+  <div class="table-wrapper">
+    <table class="employee-table">
+      <thead>
+        <tr>
+          <th>Nachname</th>
+          <th>Vorname</th>
+          <th>Ort/PLZ</th>
+          <th>Qualifikation</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees$ | async; let i = index">
+          <td>{{ e.lastName }}</td>
+          <td>{{ e.firstName }}</td>
+          <td>{{ e.postcode }} {{ e.city }}</td>
+          <td>--</td>
+          <td class="ctx-cell">
+            <button class="ctx-btn" (click)="openContext(e, i)">⋯</button>
+            <div *ngIf="isContextOpen(i)" class="ctx-menu">
+              <button (click)="view(e)">Ansehen</button>
+              <button (click)="edit(e)">Bearbeiten</button>
+            </div>
+          </td>
+          <td>
+            <button class="delete-btn" (click)="confirmDelete(e, i)">Löschen</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="(employees$ | async)?.length === 0">Keine Mitarbeiter gefunden (Platzhalter)</p>
+  </div>
+
+
+  <div class="modal-overlay" *ngIf="showDeleteModal">
+    <div class="modal">
+      <h3>Mitarbeiter löschen</h3>
+      <p>Soll {{ deleteCandidate?.lastName }} {{ deleteCandidate?.firstName }} wirklich gelöscht werden?</p>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" (click)="cancelDelete()">Abbrechen</button>
+        <button class="btn btn-confirm" (click)="performDelete()">Löschen</button>
+      </div>
+    </div>
+  </div>
+</div>
