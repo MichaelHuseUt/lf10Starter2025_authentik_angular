@@ -1,18 +1,35 @@
 <div class="qualification-list-root">
   <p>qualification-list works!</p>
 
+  <div class="table-wrapper">
+    <table class="qualification-table">
+      <thead>
+      <tr>
+        <th>Qualifikation</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (qualification of qualificationList | async; track qualification.id) {
+          @if (qualification.id === editQualification?.id) {
+            <tr>
+              <td><input [value]="qualification.skill" placeholder="Qualifikation" #qualificationInput></td>
+              <td><button class="ctx-btn" (click)="saveEditQualification(qualification.id!, qualificationInput.value)">Speichern</button></td>
+              <td><button class="delete-btn" (click)="cancelEditQualification()">Abbrechen</button></td>
+            </tr>
+          } @else {
+            <tr>
+              <td>{{qualification.skill}}</td>
+              <td><button class="ctx-btn" (click)="setEditQualification(qualification)">Bearbeiten</button></td>
+              <td><button class="delete-btn" (click)="deleteQualification.emit(qualification.id)">Löschen</button></td>
+            </tr>
 
-  Filter: <input type="text" #filterInputElement (keyup)="filterQualificationByUserInput(filterInputElement.value)">
-  <br>
+          }
+        }
+      <tr></tr>
+      </tbody>
+    </table>
 
-  <button (click)="getQualificationList()">fetch</button><br>
-  <input type="text" #skillInput>
-  <button (click)="addQualification(skillInput.value)">add Skill</button>
-  <br>
-
-  <ul>
-    <li *ngFor="let e of filteredQualificationList$ | async">
-      {{e.id }}. {{e.skill}} <button (click)="deleteQualification(e.id)">Delete</button>
-    </li>
-  </ul>
+  </div>
 </div>
