@@ -3,8 +3,18 @@
   padding: 0;
 }
 
-.controls { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
 
-ul { margin: 0; padding-left: 18px; }
+.table-wrapper { flex: 1; display: flex; flex-direction: column; margin: 0; padding: 0; min-height: 0; }
+.qualification-table { width: 100%; border-collapse: collapse; margin: 0; padding: 0; }
+.qualification-table thead { position: sticky; top: 0; background: #fff; z-index: 5; }
+.qualification-table thead th { border: 2px solid #000; padding: 8px; background: #fff; text-align: left; }
+.qualification-table tbody td { border: 1px solid #000; padding: 8px; }
+.qualification-table tbody tr { background: #fff; }
 
-li { margin-bottom: 6px; }
+/* ensure table area can scroll if many rows */
+.table-wrapper { overflow: auto; }
+
+.ctx-btn { background: transparent; border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; }
+.ctx-menu { position: absolute; right: 0; top: 28px; background: #fff; border: 1px solid #ccc; padding: 6px; display: flex; flex-direction: column; gap: 4px; z-index: 20; }
+
+.delete-btn { background: #fff; border: 2px solid #000; padding: 6px 10px; cursor: pointer; }
