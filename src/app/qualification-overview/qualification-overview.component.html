@@ -1,8 +1,12 @@
 <p>qualification-overview works!</p>
 
-<section class="filter">Filter (Platzhalter)</section>
+<section class="filter">
+  Filter: <input type="text" #filterInputElement (keyup)="filterQualificationByUserInput(filterInputElement.value)">
+</section>
+<br>
+  <input type="text" #skillInput>
+  <button (click)="addQualification(skillInput.value)">add Skill</button>
 
-<button>TODO</button>
 <section class="qualification-list">
-  <app-qualification-list></app-qualification-list>
+  <app-qualification-list [qualificationList]="filteredQualificationList$" (deleteQualification)="deleteQualification($event)" (updateQualification)="getQualificationList()"></app-qualification-list>
 </section>
