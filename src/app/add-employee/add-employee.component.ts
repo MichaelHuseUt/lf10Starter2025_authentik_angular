@@ -23,10 +23,10 @@ export class AddEmployeeComponent {
     const token = this.authService.getAccessToken();
 
     this.http.post<Employee>('http://localhost:8089/employees',
-      {firstName, lastName, street, postcode, city, phone, skillSet: []},
+      {firstName, lastName, street, postcode, city, phone, skillSet: [1]},
       {headers: new HttpHeaders()
           .set('Content-Type', 'application/json')
           .set('Authorization', `Bearer ${token}`)
-      });
+      }).subscribe()
   }
 }
