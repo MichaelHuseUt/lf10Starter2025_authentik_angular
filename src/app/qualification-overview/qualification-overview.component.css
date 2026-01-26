@@ -21,3 +21,42 @@
   position: relative;
 }
 
+.button-controls {
+  height: 60px;
+  display: inline-flex;
+}
+
+.button-add {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #18181a;
+  background: #fff;
+  border-radius: 8px;
+  color: #18181a;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 200ms ease, color 200ms ease;
+  box-sizing: border-box;
+}
+
+.button-add:hover {
+  background-color: #18181a;
+  color: #fff;
+}
+
+.input{
+  height: 40px;
+  margin: 10px;
+  padding: 0 0 0 15px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  font-size: 1.2rem;
+}
+
+.input:hover {
+  transition: 200ms ease, color 200ms ease;
+  background: #c8c8c8;
+}
