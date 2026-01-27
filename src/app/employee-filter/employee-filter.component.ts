@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Employee} from "../Employee";
@@ -12,12 +12,13 @@ import {EmployeeService} from "../employee-service/employee.service";
   styleUrl: './employee-filter.component.css'
 })
 export class EmployeeFilterComponent {
-employees: Employee[] = [];
+@Input() employees: Employee[] = []; // bekommt die Liste vom Parent
 filteredEmployees: Employee[] = [];
 
 lastName = '';
 firstName = '';
 place='';
+phone = ''; // hinzugefügt
 
 //TODO Qualification aus qualification-service
 qualificationId: number | '' = '';
@@ -29,10 +30,20 @@ qualificationId: number | '' = '';
 constructor(private employeeService: EmployeeService) {}
 
   ngOnInit() {
-  this.employeeService.getEmployees().subscribe(list => {
-    this.employees = list || [];
+    // Falls keine Parent-Liste geliefert wird, kann optional der Service genutzt werden.
+    if (!this.employees || this.employees.length === 0) {
+      this.employeeService.getEmployees().subscribe(list => {
+        this.employees = list || [];
+        this.applyFilter();
+      });
+    } else {
+      this.applyFilter();
+    }
+  }
+
+  // Reagiere auf Input-Änderungen vom Parent
+  ngOnChanges() {
     this.applyFilter();
-  });
   }
 
   onFilterChange() {
@@ -43,6 +54,7 @@ constructor(private employeeService: EmployeeService) {}
   const lastName = this.lastName.toLowerCase();
   const firstName = this.firstName.toLowerCase();
   const place = this.place.toLowerCase();
+  const phone = this.phone.toLowerCase();
   const qualificationId = this.qualificationId === '' ? null : this.qualificationId;
 
   this.filteredEmployees = this.employees.filter(e => {
@@ -52,6 +64,7 @@ constructor(private employeeService: EmployeeService) {}
       (e.city && String(e.city).toLowerCase().includes(place)) ||
       (e.postcode && String(e.postcode).toLowerCase().includes(place))
     );
+    const matchesPhone = !phone || (e.phone && String(e.phone).toLowerCase().includes(phone));
 
     let matchesQual = true;
     if (qualificationId != null) {
@@ -61,7 +74,7 @@ constructor(private employeeService: EmployeeService) {}
           (e as any).qualificationIds.includes(qualificationId));
     }
 
-    return matchesLast && matchesFirst && matchesPlace && matchesQual;
+    return matchesLast && matchesFirst && matchesPlace && matchesPhone && matchesQual;
   });
     this.filtered.emit(this.filteredEmployees);
   }

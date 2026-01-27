@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -12,7 +12,10 @@ import {AuthService} from "../../service/auth/auth.service";
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnChanges {
+  @Input() overrideEmployees: Employee[] | null = null;
+  @Output() employeesLoaded = new EventEmitter<Employee[]>();
+
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
   employees$: Observable<Employee[]> = this.employeesSubject.asObservable();
 
@@ -31,6 +34,23 @@ export class EmployeeListComponent {
     this.fetchData();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['overrideEmployees']) {
+      const prev = changes['overrideEmployees'].previousValue;
+      const curr = changes['overrideEmployees'].currentValue;
+      if (curr === null) {
+        // Wenn vorher ein Override existierte, lade die Originaldaten neu vom Backend
+        if (prev != null) {
+          this.fetchData();
+        }
+        // Falls vorher auch null war, nichts tun
+      } else {
+        // Override: zeige die bereitgestellte Liste
+        this.employeesSubject.next(curr || []);
+      }
+    }
+  }
+
   fetchData() {
     const token = this.authService.getAccessToken();
     this.http.get<Employee[]>('http://localhost:8089/employees', {
@@ -38,10 +58,16 @@ export class EmployeeListComponent {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
     }).subscribe({
-      next: data => this.employeesSubject.next(data || []),
+      next: data => {
+        const arr = data || [];
+        this.employeesSubject.next(arr);
+        // Informiere Parent über die aktuell geladenen Mitarbeiter
+        this.employeesLoaded.emit(arr);
+      },
       error: err => {
         console.error('Fehler beim Laden der Mitarbeiter', err);
         this.employeesSubject.next([]);
+        this.employeesLoaded.emit([]);
       }
     });
   }
