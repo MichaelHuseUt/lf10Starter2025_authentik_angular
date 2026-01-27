@@ -66,9 +66,9 @@ export class EmployeeListComponent {
     this.openContextIndex = null;
   }
 
-  confirmDelete(e: Employee, i: number) {
-    this.deleteCandidate = e;
-    this.deleteIndex = i;
+  confirmDelete(employee: Employee, id: number) {
+    this.deleteCandidate = employee;
+    this.deleteIndex = id;
     this.showDeleteModal = true;
   }
 

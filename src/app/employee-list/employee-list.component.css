@@ -1,4 +1,4 @@
-/* Make the component host transparent in the layout so it doesn't add extra spacing */
+
 :host {
   display: contents;
 }
@@ -15,7 +15,7 @@
 .employee-table tbody td { border: 1px solid #000; padding: 8px; }
 .employee-table tbody tr { background: #fff; }
 
-/* ensure table area can scroll if many rows */
+
 .table-wrapper { overflow: auto; }
 
 .ctx-btn { background: transparent; border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; }
@@ -23,7 +23,7 @@
 
 .delete-btn { background: #fff; border: 2px solid #000; padding: 6px 10px; cursor: pointer; }
 
-/* ensure small responsiveness */
+
 @media (max-width: 800px) {
   .employee-table thead { display: none; }
 }
