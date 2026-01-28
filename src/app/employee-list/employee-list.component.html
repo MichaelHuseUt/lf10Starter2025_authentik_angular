@@ -18,7 +18,11 @@
           <td>{{ e.lastName }}</td>
           <td>{{ e.firstName }}</td>
           <td>{{ e.postcode }} {{ e.city }}</td>
-          <td>--</td>
+          <td>
+            @for (qualification of e.skillSet; track $index) {
+              <span>{{qualification.skill}}@if(e.skillSet?.length !== $index +1){, }</span>
+            }
+          </td>
           <td class="ctx-cell">
             <button class="ctx-btn" (click)="openContext(e, i)">⋯</button>
             <div *ngIf="isContextOpen(i)" class="ctx-menu">
