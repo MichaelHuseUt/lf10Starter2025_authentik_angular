@@ -58,9 +58,6 @@ export class AddEmployeeComponent {
       if (!this.selectedPhoneNumberModal.trim().length) {
         this.errorMessageList.push("Sie müssen eine Telefonnummer angeben!")
       }
-      if (!this.selectedQualificationListModal.length) {
-        this.errorMessageList.push("Sie müssen mindestendes eine Qualifikation auswählen!")
-      }
       if (!this.errorMessageList.length) {
         return true
       }
