@@ -14,12 +14,109 @@
 .employee-table tbody td { border: 1px solid #000; padding: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .employee-table tbody tr { background: #fff; }
 
+.action-cell,
+.last-cell {
+  overflow: visible; /* Buttons sollen sichtbar sein */
+  text-overflow: unset;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+}
 
-.ctx-btn { background: transparent; border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; }
+.ctx-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 4px ;
+  cursor: pointer; }
 .ctx-menu { position: absolute; right: 0; top: 28px; background: #fff; border: 1px solid #ccc; padding: 6px; display: flex; flex-direction: column; gap: 4px; z-index: 20; }
 
-.delete-btn { background: #fff; border: 2px solid #000; padding: 6px 10px; cursor: pointer; }
+.delete-btn {
+  background: #fff;
+  border: 2px solid #000;
+  padding: 6px ;
+  cursor: pointer; }
 
+/* Neue Styles für  Aktion-Buttons */
+.action-cell { white-space: nowrap; overflow: visible; padding: 6px; }
+.action-btn {
+  background: #fff;
+  border: 2px solid #000;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  box-sizing: border-box;
+  color: #111; }
+
+
+
+
+.last-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0px; }
+
+/* Icon size inside buttons */
+.icon { width: 16px; height: 16px; display: block; }
+.icon-btn { background: transparent; border: none; padding: 0; }
+
+
+
+/* hover for action buttons */
+.action-btn:hover,
+.action-btn:focus,
+.delete-btn:hover,
+.delete-btn:focus {
+  background: #d4d6d9;
+  border-color: #888;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(17,17,17,0.06);
+  color: #111;                 /*Icon color*/
+}
+
+/* Ring für Tastatur-Navigation */
+.action-btn:focus,
+.delete-btn:focus {
+  outline: 3px solid rgba(66,133,244,0.24);
+  outline-offset: 2px;
+}
+
+/* click feedback */
+.action-btn:active,
+.delete-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* delete-Button effekt */
+.delete-btn {
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+  background: #d4d6d9;              /* leicht rötlicher Hover-Hintergrund */
+  border-color: #c62828;           /* rote Rahmenfarbe */
+  transform: translateY(-2px);     /* etwas stärkere Hebung */
+  box-shadow: 0 6px 14px rgba(198,40,40,0.12); /* stärkerer Schatten */
+  color: #c62828;
+}
+
+/* kleinere Icons/Buttons auf sehr kleinen Bildschirmen */
+@media (max-width: 480px) {
+  .action-btn { width: 30px; height: 30px; }
+  .icon { width: 14px; height: 14px; }
+  .delete-btn { width: 32px; height: 32px; }
+}
 
 @media (max-width: 800px) {
   .employee-table thead {
@@ -29,7 +126,7 @@
 
 .ctx-cell { position: relative; }
 
-
+/* Modal Delete pop up */
 .modal-overlay {
   position: fixed;
   left: 0;
