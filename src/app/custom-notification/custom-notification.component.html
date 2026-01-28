@@ -1,0 +1,10 @@
+<div [class]="'custom-notification custom-notification-' + customNotification.state">
+  <button class="custom-notification-cancel-button" (click)="deleteCustomNotification()">X</button>
+<!--  <h1>{{customNotification.id}}</h1>-->
+  <span class="custom-notification-label">{{ customNotification.label }}</span>
+  <hr>
+  <span class="custom-notification-message">{{ customNotification.message }}</span>
+  <br>
+  <span
+    [class]="'custom-notification-progress-bar custom-notification-progress-bar-' + customNotification.state"></span>
+</div>

@@ -1,0 +1,73 @@
+
+.custom-notification {
+  margin: 1rem;
+  padding: 1rem 0 0 0;
+  width: max-content;
+  position: relative;
+  border-radius: 1rem;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nodification-faiding-in 500ms linear forwards;
+}
+
+.custom-notification-success {
+  background-color: #c9f69e;
+  border: solid 0.2rem #98cc4d;
+}
+
+.custom-notification-failed {
+  background-color: #f69e9e;
+  border: solid 0.2rem #cc4d4d;
+}
+
+.custom-notification-cancel-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.5rem;
+}
+
+.custom-notification-label {
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.custom-notification-message {
+  padding: 1rem;
+}
+
+.custom-notification-progress-bar {
+  margin-top: 1rem;
+  width: 0;
+  background-color: #65868e;
+  height: 1rem;
+  display: flex;
+}
+
+.custom-notification-progress-bar-success {
+  animation: progress-bar-filling-up 5s linear forwards;
+}
+.custom-notification-progress-bar-failed {
+  animation: progress-bar-filling-up 10s linear forwards;
+}
+
+@keyframes progress-bar-filling-up {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes nodification-faiding-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
