@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import {QualificationListComponent} from "../qualification-list/qualification-list.component";
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {Qualification} from "../Qualification";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AuthService} from "../../service/auth/auth.service";
+import {QualificationService} from "../../service/qualification/qualification.service";
 
 @Component({
   selector: 'app-qualification-overview',
@@ -16,17 +15,16 @@ import {AuthService} from "../../service/auth/auth.service";
 })
 export class QualificationOverviewComponent {
 
-  qualifications$: Observable<Qualification[]>;
+  qualifications$: BehaviorSubject<Qualification[]> = new BehaviorSubject<Qualification[]>([]);
   filteredQualificationList$: Observable<Qualification[]>;
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService
+    private qualificationService: QualificationService
   ) {
-    this.qualifications$ = of([]);
+    this.getAllQualification();
     this.filteredQualificationList$ = of([]);
-    this.getQualificationList();
   }
+
 
   filterQualificationByUserInput(qualification: string): void {
     console.log(qualification);
@@ -39,53 +37,32 @@ export class QualificationOverviewComponent {
     })
   }
 
-  addQualification(newQualification: string): void {
 
-    if (newQualification.trim()) {
 
-      this.qualifications$.subscribe((qualificationList) => {
-
-        if (qualificationList.every(qualification => {
-          return qualification.skill?.toLowerCase() !== newQualification.toLowerCase();
-        })) {
-
-          const token = this.authService.getAccessToken();
-          this.http.post<Qualification>('http://localhost:8089/qualifications',
-            {skill: newQualification},
-            {
-              headers: new HttpHeaders()
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `Bearer ${token}`)
-            }).subscribe((_oOR) => {
-            this.getQualificationList();
-          });
-        }
-      })
-    }
+  addQualification(userInputElement: HTMLInputElement): void {
+    this.qualificationService.addQualification(userInputElement.value)?.subscribe(() => {
+        this.getAllQualification()
+      }
+    );
+    userInputElement.value = "";
   }
 
-  getQualificationList() {
-    const token = this.authService.getAccessToken();
-    this.qualifications$ = this.http.get<Qualification[]>('http://localhost:8089/qualifications', {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-    }).pipe(newQualificationList => this.filteredQualificationList$ = newQualificationList);
+  deleteQualification(qualificationId: number): void {
+    this.qualificationService.deleteQualification(qualificationId).subscribe(() =>
+      this.getAllQualification()
+    );
   }
 
-  deleteQualification(id: number | undefined): void {
-    if (id === undefined) {
-      return;
-    }
-
-    const token = this.authService.getAccessToken();
-    this.http.delete(`http://localhost:8089/qualifications/${id}`, {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-    }).subscribe((_oOR) => {
-      this.getQualificationList();
-    });
+  getAllQualification(): void {
+    this.qualificationService.getAllQualifications().subscribe({ next: data => {
+        this.qualifications$.next(data || [])
+        this.filteredQualificationList$ = this.qualifications$.pipe()
+      },});
   }
 
+  updateQualification(qualificationId: number, qualificationName: string): void {
+    this.qualificationService.updateQualification(qualificationId, qualificationName).subscribe(() =>
+      this.getAllQualification()
+    );
+  }
 }

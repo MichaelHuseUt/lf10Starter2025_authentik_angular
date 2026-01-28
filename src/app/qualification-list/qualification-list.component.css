@@ -18,3 +18,7 @@
 .ctx-menu { position: absolute; right: 0; top: 28px; background: #fff; border: 1px solid #ccc; padding: 6px; display: flex; flex-direction: column; gap: 4px; z-index: 20; }
 
 .delete-btn { background: #fff; border: 2px solid #000; padding: 6px 10px; cursor: pointer; }
+
+.table-edit-qualification{
+  background-color: #cccccc ;
+}

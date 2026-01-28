@@ -2,8 +2,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {Qualification} from "../Qualification";
 import {CommonModule} from "@angular/common";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AuthService} from "../../service/auth/auth.service";
 
 @Component({
   selector: 'app-qualification-list',
@@ -14,17 +12,19 @@ import {AuthService} from "../../service/auth/auth.service";
 })
 export class QualificationListComponent {
 
-  @Output() updateQualification = new EventEmitter<void>();
+  @Output() updateQualification: EventEmitter<{ id: number, qualification: string }> = new EventEmitter<{ id: number, qualification: string }>();
   @Output() deleteQualification: EventEmitter<number> = new EventEmitter();
   @Input() qualificationList: Observable<Qualification[]> = of([]);
 
   editQualification: Qualification | null = null;
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService
   ) {
+  }
 
+  emitUpdateQualification(id: number, qualification: string) {
+    this.editQualification = null
+    this.updateQualification.emit({id, qualification})
   }
 
   setEditQualification(newQualification: Qualification) {
@@ -34,25 +34,4 @@ export class QualificationListComponent {
   cancelEditQualification(): void {
     this.editQualification = null;
   }
-
-  saveEditQualification(qualificationId: number, newQualificationName: string) {
-
-    const token = this.authService.getAccessToken();
-    this.http.put(`http://localhost:8089/qualifications/${qualificationId}`,
-      {
-        skill: newQualificationName
-      }, {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/json')
-          .set('Authorization', `Bearer ${token}`)
-      }).subscribe(
-      () => {
-        this.updateQualification.emit();
-        this.editQualification = null;
-      }
-    )
-
-  }
-
-  protected readonly console = console;
 }
