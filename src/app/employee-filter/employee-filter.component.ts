@@ -12,39 +12,33 @@ import {EmployeeService} from "../employee-service/employee.service";
   styleUrl: './employee-filter.component.css'
 })
 export class EmployeeFilterComponent {
-@Input() employees: Employee[] = []; // bekommt die Liste vom Parent
+  private _employees: Employee[] = []; // interne Speicherung
+
+  @Input()
+  set employees(value: Employee[]) {
+    this._employees = value || [];
+    this.applyFilter(); // reagiert sofort auf Input
+  }
+  get employees(): Employee[] {
+    return this._employees;
+  }
+
+
 filteredEmployees: Employee[] = [];
 
 lastName = '';
 firstName = '';
 place='';
-phone = '';
+
 
 //TODO Qualification aus qualification-service
 qualificationId: number | '' = '';
 
 
-//TODO das geht vllt
+
 @Output() filtered = new EventEmitter<Employee[]>();
 
 constructor(private employeeService: EmployeeService) {}
-
-  ngOnInit() {
-    // Falls keine Parent-Liste geliefert wird, kann optional der Service genutzt werden.
-    if (!this.employees || this.employees.length === 0) {
-      this.employeeService.getEmployees().subscribe(list => {
-        this.employees = list || [];
-        this.applyFilter();
-      });
-    } else {
-      this.applyFilter();
-    }
-  }
-
-  // Reagiere auf Input-Änderungen vom Parent
-  ngOnChanges() {
-    this.applyFilter();
-  }
 
   onFilterChange() {
     this.applyFilter();
@@ -54,7 +48,6 @@ constructor(private employeeService: EmployeeService) {}
   const lastName = this.lastName.toLowerCase();
   const firstName = this.firstName.toLowerCase();
   const place = this.place.toLowerCase();
-  const phone = this.phone.toLowerCase();
   const qualificationId = this.qualificationId === '' ? null : this.qualificationId;
 
   this.filteredEmployees = this.employees.filter(e => {
@@ -64,17 +57,15 @@ constructor(private employeeService: EmployeeService) {}
       (e.city && String(e.city).toLowerCase().includes(place)) ||
       (e.postcode && String(e.postcode).toLowerCase().includes(place))
     );
-    const matchesPhone = !phone || (e.phone && String(e.phone).toLowerCase().includes(phone));
 
     let matchesQual = true;
     if (qualificationId != null) {
-      // unterstützt entweder ein einzelnes qualificationId-Feld oder ein Array qualificationIds
       matchesQual = (e as any).qualificationId === qualificationId ||
         ((e as any).qualificationIds && Array.isArray((e as any).qualificationIds) &&
           (e as any).qualificationIds.includes(qualificationId));
     }
 
-    return matchesLast && matchesFirst && matchesPlace && matchesPhone && matchesQual;
+    return matchesLast && matchesFirst && matchesPlace && matchesQual;
   });
     this.filtered.emit(this.filteredEmployees);
   }
