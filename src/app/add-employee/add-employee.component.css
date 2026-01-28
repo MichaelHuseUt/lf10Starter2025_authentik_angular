@@ -1,0 +1,24 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #f2f2f2;
+  width: 400px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}

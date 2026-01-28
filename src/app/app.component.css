@@ -80,7 +80,6 @@
 }
 
 
-
 .lower-box {
   flex: 1;
   box-sizing: border-box;
@@ -91,7 +90,6 @@
   min-height: 0;
   position: relative;
 }
-
 
 
 .lower-box > * {
@@ -134,7 +132,17 @@
 
 
 @media (max-width: 800px) {
-  .app-root { flex-direction: column; }
-  .sidebar { width: 100%; flex-direction: row; gap: 8px; }
-  .nav { flex-direction: row; }
+  .app-root {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .nav {
+    flex-direction: row;
+  }
 }

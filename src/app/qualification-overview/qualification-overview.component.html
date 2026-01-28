@@ -1,8 +1,21 @@
-<p>qualification-overview works!</p>
-
-<section class="filter">Filter (Platzhalter)</section>
-
-<button>TODO</button>
+<section class="filter">
+  Suche:
+  <input
+    class="input"
+    type="text"
+    placeholder="nach Qualifikationen"
+    #filterInputElement
+    (keyup)="filterQualificationByUserInput(filterInputElement.value)"
+  >
+</section>
+<div class="button-controls">
+  <input class="input" placeholder="Qualifikation hinzufügen" type="text" #skillInput (keyup.enter)="addQualification(skillInput)">
+  <button class="button-add" (click)="addQualification(skillInput)">+</button>
+</div>
 <section class="qualification-list">
-  <app-qualification-list></app-qualification-list>
+  <app-qualification-list
+    [qualificationList]="filteredQualificationList$"
+    (deleteQualification)="deleteQualification($event)"
+    (updateQualification)="updateQualification($event.id, $event.qualification)"
+  ></app-qualification-list>
 </section>

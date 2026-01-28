@@ -2,6 +2,13 @@
   <app-employee-filter [employees]="loadedEmployees" (filtered)="onFiltered($event)"></app-employee-filter>
 </section>
 
+<button class="button-add" (click)="openPopUp()">+</button>
+
 <section class="employee-list">
   <app-employee-list [overrideEmployees]="filteredFromFilter" (employeesLoaded)="onEmployeesLoaded($event)"></app-employee-list>
 </section>
+
+@if (addEmployeeModalIsOpen) {
+  <app-add-employee (closePopup)="closePopUp()">
+  </app-add-employee>
+}
