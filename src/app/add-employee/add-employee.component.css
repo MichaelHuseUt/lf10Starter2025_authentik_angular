@@ -1,7 +1,7 @@
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 
   display: flex;
   justify-content: center;
@@ -14,11 +14,47 @@
   width: 400px;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .close {
   float: right;
   font-size: 24px;
   cursor: pointer;
+}
+
+form {
+  display: grid;
+  grid-template:
+        "left-side right-side"
+        "footer footer" / 1fr 1fr;
+
+}
+
+.left-side {
+  grid-area: left-side;
+}
+
+.right-side {
+  grid-area: right-side;
+}
+
+.right-side select {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  grid-area: footer;
+  margin-top: 1rem;
+}
+
+.error-message-list {
+  background-color: #cccccc;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #a30400;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 5px;
 }

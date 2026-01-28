@@ -3,34 +3,62 @@
     <span class="close" (click)="closePopup.emit()">&times;</span>
 
     <form>
-      <label>Vorname </label>
-      <br/>
-      <input type="text" #firstnameInput/>
-      <br/>
-      <label>Nachname </label>
-      <br/>
-      <input type="text" #lastnameInput/>
-      <br/>
-      <label>Straße </label>
-      <br/>
-      <input type="text" #streetInput/>
-      <br/>
-      <label>Postleitzahl </label>
-      <br/>
-      <input type="number" #postcodeInput/>
-      <br/>
-      <label>Stadt </label>
-      <br/>
-      <input type="text" #cityInput/>
-      <br/>
-      <label>Telefonnummer </label>
-      <br/>
-      <input type="text" #phoneNumberInput/>
-      <br/><br/>
-      <button (click)="addEmployee(firstnameInput.value, lastnameInput.value, streetInput.value,
-                                    postcodeInput.value, cityInput.value, phoneNumberInput.value)">
-        submit
-      </button>
+      <div class="left-side">
+        <label for="first-name">Vorname </label>
+        <br/>
+        <input name="first-name" id="first-name" type="text" [(ngModel)]="selectedFirstNameModal"
+               (keyup)="validateUserInput()"/>
+        <br/>
+        <label for="last-name">Nachname </label>
+        <br/>
+        <input name="last-name" id="last-name" type="text" [(ngModel)]="selectedLastNameModal"
+               (keyup)="validateUserInput()"/>
+        <br/>
+        <label for="street">Straße </label>
+        <br/>
+        <input name="street" id="street" type="text" [(ngModel)]="selectedStreetModal" (keyup)="validateUserInput()"/>
+        <br/>
+        <label for="post-number">Postleitzahl </label>
+        <br/>
+        <input name="post-number" id="post-number" type="text" pattern="^\d{5}$" required
+               [(ngModel)]="selectedPostCodeModal" (keyup)="validateUserInput()"/>
+        <br/>
+        <label for="city">Stadt </label>
+        <br/>
+        <input name="city" id="city" type="text" [(ngModel)]="selectedCityModal" (keyup)="validateUserInput()"/>
+        <br/>
+        <label for="phone-number">Telefonnummer </label>
+        <br/>
+        <input name="phone-number" id="phone-number" type="text" [(ngModel)]="selectedPhoneNumberModal"
+               (keyup)="validateUserInput()"/>
+      </div>
+      <div class="right-side">
+        <select
+          name="qualification"
+          id="qualification"
+          multiple
+          [(ngModel)]="selectedQualificationListModal"
+          (change)="validateUserInput()"
+        >
+          @for (qualification of qualificationList$ | async; track qualification.id) {
+            <option [value]="qualification">{{ qualification.skill }}</option>
+          }
+        </select>
+      </div>
+      <div class="footer">
+        <button (click)="addEmployee()" [disabled]="errorMessageList.length">
+          submit
+        </button>
+        @if (errorMessageList.length) {
+          <div class="error-message-list">
+            <ul>
+              @for (errorMessage of errorMessageList; track $index){
+                <li class="error-message-list-item">{{errorMessage}}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
     </form>
   </div>
 </div>
