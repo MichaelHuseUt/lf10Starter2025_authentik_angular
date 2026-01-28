@@ -22,4 +22,10 @@
       </div>
     </section>
   </main>
+  <aside class="notification">
+
+    <div *ngFor="let n of notificationList(); trackBy: trackById">
+      <app-custom-notification class="notification-pop-up" (deleteNotification)="deleteNotification(n.id)" [customNotification]="n" />
+    </div>
+  </aside>
 </div>
