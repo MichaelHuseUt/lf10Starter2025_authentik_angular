@@ -18,13 +18,13 @@ filteredEmployees: Employee[] = [];
 lastName = '';
 firstName = '';
 place='';
-phone = ''; // hinzugefügt
+phone = '';
 
 //TODO Qualification aus qualification-service
 qualificationId: number | '' = '';
 
 
-//TODO das geht noch nicht lol
+//TODO das geht vllt
 @Output() filtered = new EventEmitter<Employee[]>();
 
 constructor(private employeeService: EmployeeService) {}
