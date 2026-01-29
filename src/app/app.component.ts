@@ -15,16 +15,19 @@ import {CustomNotificationComponent} from "./custom-notification/custom-notifica
 export class AppComponent {
   title = 'lf10StarterNew';
   showEmployeeHeader = false;
+  showQualificationHeader = false;
   notificationList = computed(() => this.notificationService.notificationList());
 
   constructor(private router: Router, private notificationService: NotificationService) {
 
     this.showEmployeeHeader = this.router.url.startsWith('/employees');
+    this.showQualificationHeader = this.router.url.startsWith('/qualifications');
 
     this.router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd)
     ).subscribe(event => {
       this.showEmployeeHeader = event.urlAfterRedirects.startsWith('/employees');
+      this.showQualificationHeader = event.urlAfterRedirects.startsWith('/qualifications');
     });
   }
 

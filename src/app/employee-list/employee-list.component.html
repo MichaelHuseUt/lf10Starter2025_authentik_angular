@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of employees$ | async; let i = index">
+        <tr *ngFor="let e of employees$ | async; let i = index" (contextmenu)="openContext(e, i, $event)">
           <td>{{ e.lastName }}</td>
           <td>{{ e.firstName }}</td>
           <td>{{ e.postcode }} {{ e.city }}</td>
@@ -41,13 +41,19 @@
   </div>
 
 
-  <div class="modal-overlay" *ngIf="showDeleteModal">
+  <div class="modal-overlay" *ngIf="modalIsOpen">
     <div class="modal">
-      <h3>Mitarbeiter löschen</h3>
-      <p>Soll {{ deleteCandidate?.lastName }} {{ deleteCandidate?.firstName }} wirklich gelöscht werden?</p>
-      <div class="modal-actions">
-        <button class="btn btn-cancel" (click)="cancelDelete()">Abbrechen</button>
-        <button class="btn btn-confirm" (click)="performDelete()">Löschen</button>
+      <div *ngIf="showDeleteModal">
+        <h3>Mitarbeiter löschen</h3>
+        <p>Soll {{ deleteCandidate?.lastName }} {{ deleteCandidate?.firstName }} wirklich gelöscht werden?</p>
+        <div class="modal-actions">
+          <button class="btn btn-cancel" (click)="cancelDelete()">Abbrechen</button>
+          <button class="btn btn-confirm" (click)="performDelete()">Löschen</button>
+        </div>
+      </div>
+
+      <div *ngIf="showViewModal">
+        <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails"/>
       </div>
     </div>
   </div>

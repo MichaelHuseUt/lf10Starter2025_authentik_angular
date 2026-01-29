@@ -147,6 +147,9 @@
   }
 }
 
+header {
+  font-size: calc(10px + 2vmin);
+}
 
 .notification{
   position: fixed;
