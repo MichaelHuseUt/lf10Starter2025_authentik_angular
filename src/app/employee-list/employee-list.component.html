@@ -75,7 +75,9 @@
       </div>
 
       <div *ngIf="showViewModal">
-        <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails"/>
+        <ng-container *ngIf="viewEmployeeDetails">
+          <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails"></app-view-employee>
+        </ng-container>
       </div>
     </div>
   </div>
