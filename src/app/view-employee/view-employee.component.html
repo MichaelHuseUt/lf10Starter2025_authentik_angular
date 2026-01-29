@@ -1,0 +1,43 @@
+<p>view-employee works!</p>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closePopup.emit()">&times;</span>
+
+    <form>
+      <div class="left-side">
+        <label>Vorname </label>
+        <br/>
+        <div class="employee-item"> {{employee.firstName}} </div>
+        <br/>
+        <label>Nachname </label>
+        <br/>
+        <div class="employee-item"> {{employee.lastName}} </div>
+        <br/>
+        <label>Straße </label>
+        <br/>
+        <div class="employee-item"> {{employee.street}} </div>
+        <br/>
+        <label>Postleitzahl </label>
+        <br/>
+        <div class="employee-item"> {{employee.postcode}} </div>
+        <br/>
+        <label>Stadt </label>
+        <br/>
+        <div class="employee-item"> {{employee.city}} </div>
+        <br/>
+        <label>Telefonnummer </label>
+        <br/>
+        <div class="employee-item"> {{employee.phone}} </div>
+      </div>
+      <div class="right-side">
+        <span>Qualifikationen:</span>
+        <ul
+        >
+          @for (qualification of employee.skillSet; track qualification.id) {
+            <li >{{ qualification.skill }}</li>
+          }
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
