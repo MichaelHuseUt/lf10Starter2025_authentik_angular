@@ -4,11 +4,12 @@ import { Observable, BehaviorSubject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Employee } from "../Employee";
 import {AuthService} from "../../service/auth/auth.service";
+import {ViewEmployeeComponent} from "../view-employee/view-employee.component";
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ViewEmployeeComponent],
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
@@ -18,6 +19,7 @@ export class EmployeeListComponent implements OnChanges {
 
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
   employees$: Observable<Employee[]> = this.employeesSubject.asObservable();
+  modalIsOpen = false;
 
   // index of opened context menu (null = none)
   openContextIndex: number | null = null;
@@ -26,6 +28,10 @@ export class EmployeeListComponent implements OnChanges {
   showDeleteModal = false;
   deleteCandidate: Employee | null = null;
   deleteIndex: number | null = null;
+
+  // view modal state
+  viewEmployeeDetails: Employee | null = null;
+  showViewModal: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -71,7 +77,10 @@ export class EmployeeListComponent implements OnChanges {
     });
   }
 
-  openContext(e: Employee, i: number) {
+  openContext(e: Employee, i: number, event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     this.openContextIndex = this.openContextIndex === i ? null : i;
   }
 
@@ -80,9 +89,16 @@ export class EmployeeListComponent implements OnChanges {
   }
 
   view(e: Employee) {
-    // TODO: View-Funktionalität
-    console.log('View', e);
+    this.viewEmployeeDetails = e;
+    this.showViewModal = true;
     this.openContextIndex = null;
+    this.modalIsOpen = true;
+  }
+
+  exitView(): void {
+    this.showViewModal = false;
+    this.viewEmployeeDetails = null;
+    this.modalIsOpen = false;
   }
 
   edit(e: Employee) {
@@ -95,12 +111,14 @@ export class EmployeeListComponent implements OnChanges {
     this.deleteCandidate = employee;
     this.deleteIndex = id;
     this.showDeleteModal = true;
+    this.modalIsOpen = true;
   }
 
   cancelDelete() {
     this.showDeleteModal = false;
     this.deleteCandidate = null;
     this.deleteIndex = null;
+    this.modalIsOpen = false;
   }
 
   performDelete() {

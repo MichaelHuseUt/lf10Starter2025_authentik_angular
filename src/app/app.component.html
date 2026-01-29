@@ -9,10 +9,14 @@
 
   <main class="main">
     <!-- Employee header only on /employees -->
-    <section *ngIf="showEmployeeHeader" class="employee-header">
-      <h2>LF10-Starter</h2>
-      <p>Wenn Sie in der EmployeeListComponent.ts ein gültiges Bearer-Token eintragen, sollten hier die Namen der in der Datenbank gespeicherten Mitarbeiter angezeigt werden!</p>
-    </section>
+    <header *ngIf="showEmployeeHeader" class="employee-header">
+      <h1>Mitarbeiter</h1>
+      <hr>
+    </header>
+    <header *ngIf="showQualificationHeader" class="qualification-header">
+      <h1>Qualifikationen</h1>
+      <hr>
+    </header>
 
     <section class="content-area">
       <div class="lower-box">
@@ -22,4 +26,10 @@
       </div>
     </section>
   </main>
+  <aside class="notification">
+
+    <div *ngFor="let n of notificationList(); trackBy: trackById">
+      <app-custom-notification class="notification-pop-up" (deleteNotification)="deleteNotification(n.id)" [customNotification]="n" />
+    </div>
+  </aside>
 </div>
