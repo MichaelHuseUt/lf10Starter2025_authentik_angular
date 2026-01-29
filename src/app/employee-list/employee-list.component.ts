@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -13,7 +13,10 @@ import {ViewEmployeeComponent} from "../view-employee/view-employee.component";
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnChanges {
+  @Input() overrideEmployees: Employee[] | null = null;
+  @Output() employeesLoaded = new EventEmitter<Employee[]>();
+
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
   employees$: Observable<Employee[]> = this.employeesSubject.asObservable();
   modalIsOpen = false;
@@ -37,6 +40,23 @@ export class EmployeeListComponent {
     this.fetchData();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['overrideEmployees']) {
+      const prev = changes['overrideEmployees'].previousValue;
+      const curr = changes['overrideEmployees'].currentValue;
+      if (curr === null) {
+        // Wenn vorher ein Override existierte, lade die Originaldaten neu vom Backend
+        if (prev != null) {
+          this.fetchData();
+        }
+        // Falls vorher auch null war, nichts tun
+      } else {
+        // Override: zeige die bereitgestellte Liste
+        this.employeesSubject.next(curr || []);
+      }
+    }
+  }
+
   fetchData() {
     const token = this.authService.getAccessToken();
     this.http.get<Employee[]>('http://localhost:8089/employees', {
@@ -44,10 +64,15 @@ export class EmployeeListComponent {
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
     }).subscribe({
-      next: data => this.employeesSubject.next(data || []),
+      next: data => {
+        const arr = data || [];
+        this.employeesSubject.next(arr);
+        this.employeesLoaded.emit(arr);
+      },
       error: err => {
         console.error('Fehler beim Laden der Mitarbeiter', err);
         this.employeesSubject.next([]);
+        this.employeesLoaded.emit([]);
       }
     });
   }
@@ -82,9 +107,9 @@ export class EmployeeListComponent {
     this.openContextIndex = null;
   }
 
-  confirmDelete(e: Employee, i: number) {
-    this.deleteCandidate = e;
-    this.deleteIndex = i;
+  confirmDelete(employee: Employee, id: number) {
+    this.deleteCandidate = employee;
+    this.deleteIndex = id;
     this.showDeleteModal = true;
     this.modalIsOpen = true;
   }
@@ -112,7 +137,7 @@ export class EmployeeListComponent {
 
     const idToDelete = current[this.deleteIndex].id ?? null;
 
-    // Zuerst Backend-Aufruf mit der ermittelten ID, danach die lokale Ansicht aktualisieren.
+    // Zuerst Backend-Aufruf mit der ermittelten ID, danach die ListView aktualisieren.
     this.deleteEmployeeFromBackend(idToDelete);
     this.deleteEmployeeFromListView(this.deleteIndex);
     this.cancelDelete();
