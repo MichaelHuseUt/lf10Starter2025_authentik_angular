@@ -61,7 +61,6 @@ export class EmployeeListComponent implements OnChanges {
       next: data => {
         const arr = data || [];
         this.employeesSubject.next(arr);
-        // Informiere Parent über die aktuell geladenen Mitarbeiter
         this.employeesLoaded.emit(arr);
       },
       error: err => {
@@ -120,7 +119,7 @@ export class EmployeeListComponent implements OnChanges {
 
     const idToDelete = current[this.deleteIndex].id ?? null;
 
-    // Zuerst Backend-Aufruf mit der ermittelten ID, danach die lokale Ansicht aktualisieren.
+    // Zuerst Backend-Aufruf mit der ermittelten ID, danach die ListView aktualisieren.
     this.deleteEmployeeFromBackend(idToDelete);
     this.deleteEmployeeFromListView(this.deleteIndex);
     this.cancelDelete();

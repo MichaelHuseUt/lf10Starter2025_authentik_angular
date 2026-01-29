@@ -59,7 +59,7 @@
   justify-content: flex-end;
   gap: 0px; }
 
-/* Icon size inside buttons */
+/* Icon size buttons */
 .icon { width: 16px; height: 16px; display: block; }
 .icon-btn { background: transparent; border: none; padding: 0; }
 
@@ -104,10 +104,10 @@
 
 .delete-btn:hover,
 .delete-btn:focus {
-  background: #d4d6d9;              /* leicht rötlicher Hover-Hintergrund */
-  border-color: #c62828;           /* rote Rahmenfarbe */
-  transform: translateY(-2px);     /* etwas stärkere Hebung */
-  box-shadow: 0 6px 14px rgba(198,40,40,0.12); /* stärkerer Schatten */
+  background: #d4d6d9;
+  border-color: #c62828;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(198,40,40,0.12);
   color: #c62828;
 }
 
