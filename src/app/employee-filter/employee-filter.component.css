@@ -6,15 +6,51 @@
   padding: 12px;
 }
 
-.filter-row input {
+.filter-row input,
+.filter-row select {
   /*flex: 1 1 180px;*/
   min-width: 160px;
   padding: 6px 8px;
   box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font: inherit;
+  height: 34px;
 }
-.filter-row input[type="submit"] {
-  flex: 0 0 auto;              /* feste Größe für den Button */
-  padding: 6px 12px;
+
+
+.form-select {
+  display: inline-block;
+  width: auto;
+  padding: 6px 36px 6px 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 34px;
+}
+
+
+.form-select:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
+}
+
+.filter-row select,
+.filter-row .form-select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M4 6l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 12px;
+  padding-right: 44px;
 }
 
 @media (max-width: 600px) {
