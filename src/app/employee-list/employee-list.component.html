@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of employees$ | async; let i = index" (contextmenu)="openContext(e, i, $event)">
+        <tr *ngFor="let e of employees$ | async; let i = index" (dblclick)="view(e)">
           <td>{{ e.lastName }}</td>
           <td>{{ e.firstName }}</td>
           <td>{{ e.postcode }} {{ e.city }}</td>
@@ -76,7 +76,7 @@
 
       <div *ngIf="showViewModal">
         <ng-container *ngIf="viewEmployeeDetails">
-          <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails"></app-view-employee>
+          <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails" [enterInEditMode]="enterInEditMode"></app-view-employee>
         </ng-container>
       </div>
     </div>

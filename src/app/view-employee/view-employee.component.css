@@ -26,7 +26,8 @@
 form {
   display: grid;
   grid-template:
-        "left-side right-side" / 1fr 1fr;
+        "left-side right-side"
+        "footer footer"/ 1fr 1fr;
 
 }
 
@@ -50,4 +51,22 @@ form {
 .right-side li {
   width: 100%;
   height: 100%;
+}
+.right-side select {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.error-message-list {
+  background-color: #cccccc;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #a30400;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 5px;
 }

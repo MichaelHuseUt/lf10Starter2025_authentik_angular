@@ -13,6 +13,7 @@
 .employee-table thead th { border: 2px solid #000; padding: 8px; background: #fff; text-align: left; }
 .employee-table tbody td { border: 1px solid #000; padding: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .employee-table tbody tr { background: #fff; }
+.employee-table tbody tr:hover { background-color: #ccc; }
 
 .action-cell,
 .last-cell {

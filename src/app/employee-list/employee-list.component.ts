@@ -30,8 +30,9 @@ export class EmployeeListComponent implements OnChanges {
   deleteIndex: number | null = null;
 
   // view modal state
-  viewEmployeeDetails: Employee | null = null;
+  viewEmployeeDetails: Employee = {};
   showViewModal: boolean = false;
+  enterInEditMode: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -89,6 +90,7 @@ export class EmployeeListComponent implements OnChanges {
   }
 
   view(e: Employee) {
+    this.enterInEditMode = false;
     this.viewEmployeeDetails = e;
     this.showViewModal = true;
     this.openContextIndex = null;
@@ -97,14 +99,16 @@ export class EmployeeListComponent implements OnChanges {
 
   exitView(): void {
     this.showViewModal = false;
-    this.viewEmployeeDetails = null;
+    this.viewEmployeeDetails = {};
     this.modalIsOpen = false;
   }
 
   edit(e: Employee) {
-    //TODO: Edit-Funktionalität
-    console.log('Edit', e);
+    this.enterInEditMode = true;
+    this.viewEmployeeDetails = e;
+    this.showViewModal = true;
     this.openContextIndex = null;
+    this.modalIsOpen = true;
   }
 
   confirmDelete(employee: Employee, id: number) {
