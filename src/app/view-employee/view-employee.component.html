@@ -31,21 +31,13 @@
           <input name="phone" id="phone" class="employee-item" [(ngModel)]="phoneNumberModal" (keyup)="validateUserInput()">
         </div>
         <div class="right-side">
-          <label for="qualification">Qualifikationen:</label>
-          <select
-            name="qualification"
-            id="qualification"
-            multiple
-            [(ngModel)]="qualificationListModal"
-            (change)="validateUserInput()"
-          >
-<!--            TODO: Add preselect-->
-            @for (qualification of qualificationList$ | async; track qualification.id) {
-              <option
-                [value]="qualification"
-              >{{ qualification.skill }}</option>
-            }
-          </select>
+          <app-custom-qualification-select
+            [qualificationList$]="qualificationList$"
+            [enableSearchBar]="true"
+            [preSelectedQualificationList]="employee.skillSet!"
+            (getSelection)="getQualificationSelection($event)"
+          ></app-custom-qualification-select>
+
         </div>
       </form>
     } @else {

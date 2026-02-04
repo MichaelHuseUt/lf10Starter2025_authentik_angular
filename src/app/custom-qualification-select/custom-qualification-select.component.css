@@ -1,0 +1,27 @@
+
+.filter-options{
+}
+
+.select-section {
+  overflow: scroll;
+  height: 210px;
+  border: 1px solid #7a7a7a;
+  background-color: white;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  padding: 6px;
+}
+
+li:nth-child(even) {
+ background-color: #d5d5d5;
+}
+
+li:nth-child(odd) {
+ background-color: #ececec;
+}
+

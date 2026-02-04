@@ -33,17 +33,11 @@
                (keyup)="validateUserInput()"/>
       </div>
       <div class="right-side">
-        <select
-          name="qualification"
-          id="qualification"
-          multiple
-          [(ngModel)]="selectedQualificationListModal"
-          (change)="validateUserInput()"
-        >
-          @for (qualification of qualificationList$ | async; track qualification.id) {
-            <option [value]="qualification">{{ qualification.skill }}</option>
-          }
-        </select>
+        <app-custom-qualification-select
+          [qualificationList$]="qualificationList$"
+          [enableSearchBar]="true"
+          (getSelection)="getQualificationSelection($event)"
+        ></app-custom-qualification-select>
       </div>
       <div class="footer">
         <button (click)="addEmployee()" [disabled]="errorMessageList.length">

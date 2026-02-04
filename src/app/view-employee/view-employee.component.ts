@@ -2,18 +2,18 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Employee} from "../Employee";
 import {Qualification} from "../Qualification";
-import {AsyncPipe} from "@angular/common";
 import {QualificationService} from "../../service/qualification/qualification.service";
 import {Observable, of} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../../service/auth/auth.service";
+import {CustomQualificationSelectComponent} from "../custom-qualification-select/custom-qualification-select.component";
 
 @Component({
   selector: 'app-view-employee',
   standalone: true,
   imports: [
     FormsModule,
-    AsyncPipe
+    CustomQualificationSelectComponent
   ],
   templateUrl: './view-employee.component.html',
   styleUrl: './view-employee.component.css'
@@ -31,7 +31,7 @@ export class ViewEmployeeComponent {
   postCodeModal: string = "";
   phoneNumberModal: string = "";
   cityModal: string = "";
-  qualificationListModal: Qualification[] = [];
+  qualificationIdListModal: string[] = [];
 
   isEditing = false;
 
@@ -43,6 +43,10 @@ export class ViewEmployeeComponent {
         this.switchToEditMode();
       }
     })
+  }
+
+  getQualificationSelection(selectedQualificationIdList: string[] ) {
+    this.qualificationIdListModal = selectedQualificationIdList;
   }
 
   validateUserInput(): boolean {
@@ -77,7 +81,7 @@ export class ViewEmployeeComponent {
     this.postCodeModal = this.employee.postcode ?? ""
     this.phoneNumberModal = this.employee.phone ?? ""
     this.cityModal = this.employee.city ?? ""
-    this.qualificationListModal = this.employee.skillSet ?? []
+    this.qualificationIdListModal = this.employee.skillSet ? this.employee.skillSet?.map(skill => skill.id!.toString() ) : []
   }
 
   cancelEditMode() {
@@ -95,7 +99,7 @@ export class ViewEmployeeComponent {
         postcode: this.postCodeModal,
         city: this.cityModal,
         phone: this.phoneNumberModal,
-        skillSet: this.qualificationListModal.map(q => q.id),
+        skillSet: this.qualificationIdListModal,
       }, {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/json')
@@ -107,8 +111,5 @@ export class ViewEmployeeComponent {
     });
   }
 
-  findQualification(qualification: Qualification) {
-    return this.qualificationListModal.filter((q) => { return q.id === qualification.id })
-  }
 
 }

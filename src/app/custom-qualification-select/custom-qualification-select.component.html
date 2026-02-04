@@ -1,0 +1,18 @@
+<div>
+  <div class="filter-options">
+    <label for="qualification-filter-input">Suche Qualifikationen:</label>
+
+    <input id="qualification-filter-input" name="qualification-filter-input" [(ngModel)]="searchInputModal">
+  </div>
+
+  <section class="select-section">
+    <ul #ulElement>
+      @for (qualification of mappedQualificationToDisplayList$ | async; track qualification.id) {
+        <li>
+          <input (change)="getSelectionEmit(ulElement)" type="checkbox" [checked]="qualification.checked" [value]="qualification.id" [id]="'qualification-checkbox-' + qualification.id" [name]="'qualification-checkbox-' + qualification.id">
+          <label [for]="'qualification-checkbox-' + qualification.id">{{qualification.skill}}</label>
+        </li>
+      }
+    </ul>
+  </section>
+</div>

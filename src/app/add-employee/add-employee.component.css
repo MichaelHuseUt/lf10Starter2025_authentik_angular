@@ -28,7 +28,6 @@ form {
   grid-template:
         "left-side right-side"
         "footer footer" / 1fr 1fr;
-
 }
 
 .left-side {
