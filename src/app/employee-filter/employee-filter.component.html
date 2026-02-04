@@ -8,6 +8,11 @@
              [(ngModel)]="firstName" (ngModelChange)="onFilterChange()">
       <input type="text" id="place" name="place" placeholder="Ort/PLZ"
              [(ngModel)]="place" (ngModelChange)="onFilterChange()">
+
+      <select id="qualification" name="qualification" class="form-select" aria-label="Select Qualification" [(ngModel)]="selectedQualification" (ngModelChange)="onFilterChange()">
+        <option [ngValue]="''" selected>Alle Qualifikationen</option>
+        <option *ngFor="let q of qualifications" [ngValue]="q">{{q.skill}}</option>
+      </select>
     </form>
   </fieldset>
 </div>
