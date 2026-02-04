@@ -1,12 +1,12 @@
-
 .filter-options{
 }
 
 .select-section {
-  overflow: scroll;
+  overflow: auto;
   height: 210px;
-  border: 1px solid #7a7a7a;
-  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
 }
 
 ul {
@@ -14,14 +14,14 @@ ul {
   padding: 0;
 }
 li {
-  padding: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 li:nth-child(even) {
- background-color: #d5d5d5;
+ background-color: var(--color-surface-alt);
 }
 
 li:nth-child(odd) {
- background-color: #ececec;
+ background-color: var(--color-surface);
 }
-
