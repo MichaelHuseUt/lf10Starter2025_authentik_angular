@@ -1,8 +1,16 @@
-.filter-options{
+.filter-options input{
+  border: 1px solid var(--color-border);
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.filter-options label {
+  font-weight: 600;
 }
 
 .select-section {
-  overflow: auto;
+  overflow: scroll;
   height: 210px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
