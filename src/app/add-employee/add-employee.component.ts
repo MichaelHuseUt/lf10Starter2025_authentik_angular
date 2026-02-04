@@ -5,16 +5,16 @@ import {AuthService} from "../../service/auth/auth.service";
 import {QualificationService} from "../../service/qualification/qualification.service";
 import {Observable, of} from "rxjs";
 import {Qualification} from "../Qualification";
-import {AsyncPipe} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {CustomQualificationSelectComponent} from "../custom-qualification-select/custom-qualification-select.component";
 
 @Component({
   selector: 'app-add-employee',
   standalone: true,
   templateUrl: './add-employee.component.html',
   imports: [
-    AsyncPipe,
-    FormsModule
+    FormsModule,
+    CustomQualificationSelectComponent
   ],
   styleUrls: ['./add-employee.component.css']
 })
@@ -31,10 +31,14 @@ export class AddEmployeeComponent {
   selectedPostCodeModal: string = ""
   selectedPhoneNumberModal: string = "";
   selectedCityModal: string = ""
-  selectedQualificationListModal: Qualification[] = [];
+  selectedQualificationIdListModal: string[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService, private qualificationService: QualificationService) {
     this.qualificationService.getAllQualifications().subscribe((q) => this.qualificationList$ = of(q))
+  }
+
+  getQualificationSelection(selectedQualificationIdList: string[] ) {
+    this.selectedQualificationIdListModal = selectedQualificationIdList;
   }
 
   validateUserInput(): boolean {
@@ -66,7 +70,6 @@ export class AddEmployeeComponent {
   }
 
   addEmployee(): void {
-    let map = this.selectedQualificationListModal.map(q => q.id);
 
     this.showErrorMessage = true;
     if (this.validateUserInput()) {
@@ -80,7 +83,7 @@ export class AddEmployeeComponent {
           postcode: this.selectedPostCodeModal.trim(),
           city: this.selectedCityModal.trim(),
           phone: this.selectedPhoneNumberModal.trim(),
-          skillSet: map
+          skillSet: this.selectedQualificationIdListModal
         },
         {
           headers: new HttpHeaders()
@@ -91,4 +94,6 @@ export class AddEmployeeComponent {
       });
     }
   }
+
+  protected readonly Qualification = Qualification;
 }
