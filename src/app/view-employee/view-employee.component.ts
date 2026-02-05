@@ -7,6 +7,7 @@ import {Observable, of} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../../service/auth/auth.service";
 import {CustomQualificationSelectComponent} from "../custom-qualification-select/custom-qualification-select.component";
+import {NotificationService, NotificationState} from "../../service/notification/notification.service";
 
 @Component({
   selector: 'app-view-employee',
@@ -35,7 +36,7 @@ export class ViewEmployeeComponent {
 
   isEditing = false;
 
-  constructor(private qualificationService: QualificationService, private httpClient: HttpClient, private authService: AuthService) {
+  constructor(private qualificationService: QualificationService, private httpClient: HttpClient, private authService: AuthService, private notificationService: NotificationService) {
     this.qualificationService.getAllQualifications().subscribe((q) => {
       this.qualificationList$ = of(q)
 
@@ -106,6 +107,11 @@ export class ViewEmployeeComponent {
           .set('Authorization', `Bearer ${token}`)
       }).subscribe(response => {
         if (response) {
+          this.notificationService.add(
+            NotificationState.SUCCESS,
+            "Mitarbeiter wurde erfolgreich bearbeitet",
+            `Der Mitarbeiter ${response.firstName} ${response.lastName} wurde erfolgreich bearbeitet.`,
+          )
           this.closePopup.emit();
         }
     });

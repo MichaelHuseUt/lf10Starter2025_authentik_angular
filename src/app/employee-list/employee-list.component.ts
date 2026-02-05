@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Employee} from "../Employee";
 import {AuthService} from "../../service/auth/auth.service";
 import {ViewEmployeeComponent} from "../view-employee/view-employee.component";
+import {NotificationService, NotificationState} from "../../service/notification/notification.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -37,7 +38,8 @@ export class EmployeeListComponent implements OnChanges {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificationService,
   ) {
     this.fetchData();
   }
@@ -182,9 +184,19 @@ export class EmployeeListComponent implements OnChanges {
     }).subscribe({
       next: () => {
         console.log(`Mitarbeiter mit ID ${id} erfolgreich gelöscht.`);
+        this.notificationService.add(
+          NotificationState.SUCCESS,
+          "Mitarbeiter erfolgreich gelöscht",
+          `Der Mitarbeiter wurde gelöscht.`,
+        );
       },
       error: err => {
         console.error(`Fehler beim Löschen des Mitarbeiters mit ID ${id}`, err);
+        this.notificationService.add(
+          NotificationState.FAILED,
+          "Fehler beim löschen aufgetreten",
+          `Mitarbeiter konnte nicht gelöscht werden.`,
+        )
       }
     });
   }
