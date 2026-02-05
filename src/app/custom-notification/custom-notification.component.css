@@ -1,0 +1,76 @@
+.custom-notification {
+  margin: 0.75rem;
+  padding: 0.75rem 0 0 0;
+  width: max-content;
+  position: relative;
+  border-radius: var(--radius-md);
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  animation: nodification-faiding-in 500ms linear forwards;
+}
+
+.custom-notification-success {
+  background-color: #ecfdf5;
+  border: solid 1px #86efac;
+}
+
+.custom-notification-failed {
+  background-color: #fef2f2;
+  border: solid 1px #fecaca;
+}
+
+.custom-notification-cancel-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.custom-notification-label {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.custom-notification-message {
+  padding: 0 1rem 0.75rem 1rem;
+  color: var(--color-text);
+}
+
+.custom-notification-progress-bar {
+  margin-top: 0.5rem;
+  width: 0;
+  background-color: var(--color-primary);
+  height: 0.35rem;
+  display: flex;
+}
+
+.custom-notification-progress-bar-success {
+  animation: progress-bar-filling-up 5s linear forwards;
+}
+.custom-notification-progress-bar-failed {
+  animation: progress-bar-filling-up 10s linear forwards;
+}
+
+@keyframes progress-bar-filling-up {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes nodification-faiding-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

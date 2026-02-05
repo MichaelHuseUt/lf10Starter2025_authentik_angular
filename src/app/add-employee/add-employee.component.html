@@ -1,0 +1,66 @@
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closePopup.emit()">&times;</span>
+
+    <form>
+      <div class="employee-item first-name">
+        <label for="first-name">Vorname: </label>
+        <br/>
+        <input name="first-name" id="first-name" type="text" [(ngModel)]="selectedFirstNameModal"
+               (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item last-name">
+        <label for="last-name">Nachname: </label>
+        <br/>
+        <input name="last-name" id="last-name" type="text" [(ngModel)]="selectedLastNameModal"
+               (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item street">
+        <label for="street">Straße: </label>
+        <br/>
+        <input name="street" id="street" type="text" [(ngModel)]="selectedStreetModal" (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item post-code">
+        <label for="post-number">Postleitzahl: </label>
+        <br/>
+        <input name="post-number" id="post-number" type="text" pattern="^\d{5}$" required
+               [(ngModel)]="selectedPostCodeModal" (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item city">
+        <label for="city">Stadt: </label>
+        <br/>
+        <input name="city" id="city" type="text" [(ngModel)]="selectedCityModal" (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item phone">
+        <label for="phone-number">Telefonnummer: </label>
+        <br/>
+        <input name="phone-number" id="phone-number" type="text" [(ngModel)]="selectedPhoneNumberModal"
+               (keyup)="validateUserInput()"/>
+      </div>
+      <div class="employee-item qualification">
+        <app-custom-qualification-select
+          [qualificationList$]="qualificationList$"
+          [enableSearchBar]="true"
+          (getSelection)="getQualificationSelection($event)"
+        ></app-custom-qualification-select>
+      </div>
+      <div class="footer">
+        <button (click)="addEmployee()" class="save-button" [disabled]="errorMessageList.length">
+          speichern
+        </button>
+        <button class="cancel-button" (click)="closePopup.emit()">
+          abbrechen
+        </button>
+        @if (errorMessageList.length) {
+          <div class="error-message-list">
+            <ul>
+              @for (errorMessage of errorMessageList; track $index) {
+                <li class="error-message-list-item">{{ errorMessage }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </form>
+  </div>
+</div>

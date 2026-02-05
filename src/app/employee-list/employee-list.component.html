@@ -1,9 +1,84 @@
-<h1>LF10-Starter</h1>
-Wenn Sie in der EmployeeListComponent.ts ein gültiges Bearer-Token eintragen, sollten hier die Namen der in der Datenbank gespeicherten Mitarbeiter angezeigt werden!
-<ul>
-  @for(e of employees$ | async; track e.id) {
-    <li>
-      {{e.lastName }}, {{e.firstName}}
-    </li>
-  }
-</ul>
+<div class="employee-list-root">
+
+
+  <div class="table-wrapper">
+    <table class="employee-table">
+      <colgroup>
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:30%">
+        <col style="width:10%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Nachname</th>
+          <th>Vorname</th>
+          <th>Ort/PLZ</th>
+          <th>Qualifikation</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees$ | async; let i = index" (dblclick)="view(e)">
+          <td>{{ e.lastName }}</td>
+          <td>{{ e.firstName }}</td>
+          <td>{{ e.postcode }} {{ e.city }}</td>
+          <td>
+            @for (qualification of e.skillSet; track $index) {
+              <span>{{qualification.skill}}@if(e.skillSet?.length !== $index +1){, }</span>
+            }
+          </td>
+          <td class="action-cell last-cell">
+            <button class="action-btn icon-btn" title="Ansehen" aria-label="Ansehen" (click)="view(e)">
+              <!-- Eye icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="action-btn icon-btn" title="Bearbeiten" aria-label="Bearbeiten" (click)="edit(e)">
+              <!-- Edit/pencil icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M3 21l3-1 11-11 1-3-4-0-11 11-0 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 7l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="delete-btn icon-btn" title="Löschen" aria-label="Löschen" (click)="confirmDelete(e, i)">
+              <!-- Trash icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 11v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 11v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="(employees$ | async)?.length === 0">Keine Mitarbeiter gefunden</p>
+  </div>
+
+
+  <div class="modal-overlay" *ngIf="modalIsOpen">
+    <div class="modal">
+      <div *ngIf="showDeleteModal">
+        <h3>Mitarbeiter löschen</h3>
+        <p>Soll {{ deleteCandidate?.lastName }} {{ deleteCandidate?.firstName }} wirklich gelöscht werden?</p>
+        <div class="modal-actions">
+          <button class="btn btn-cancel" (click)="cancelDelete()">Abbrechen</button>
+          <button class="btn btn-confirm" (click)="performDelete()">Löschen</button>
+        </div>
+      </div>
+
+      <div *ngIf="showViewModal">
+        <ng-container *ngIf="viewEmployeeDetails">
+          <app-view-employee (closePopup)="exitView()" [employee]="viewEmployeeDetails" [enterInEditMode]="enterInEditMode"></app-view-employee>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

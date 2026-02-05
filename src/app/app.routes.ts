@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { CallbackComponent } from './callback/callback.component';
 import { authGuard } from './auth.guard';
+import {EmployeeOverviewComponent} from "./employee-overview/employee-overview.component";
+import {QualificationOverviewComponent} from "./qualification-overview/qualification-overview.component";
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'employees', pathMatch: 'full' },
   { path: 'callback', component: CallbackComponent },
-  { path: 'employees', component: EmployeeListComponent, canActivate: [authGuard] },
+  { path: 'employees', component: EmployeeOverviewComponent, canActivate: [authGuard]  },
+  { path: 'qualifications', component: QualificationOverviewComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

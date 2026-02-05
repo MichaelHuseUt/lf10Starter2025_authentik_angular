@@ -1,0 +1,35 @@
+.qualification-list-root {
+  margin: 0;
+  padding: 0;
+}
+
+
+.table-wrapper { flex: 1; display: flex; flex-direction: column; margin: 0; padding: 0; min-height: 0; overflow: auto; }
+.qualification-table { width: 100%; border-collapse: collapse; margin: 0; padding: 0; }
+.qualification-table thead { position: sticky; top: 0; background: var(--color-surface); z-index: 5; }
+.qualification-table thead th { border-bottom: 1px solid var(--color-border); padding: 10px 12px; background: var(--color-surface-alt); text-align: left; font-weight: 600; color: var(--color-muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+.qualification-table tbody td { border-bottom: 1px solid var(--color-border); padding: 10px 12px; }
+.qualification-table tbody tr { background: var(--color-surface); transition: background 140ms ease; }
+.qualification-table tbody tr:hover { background: var(--color-primary-100); }
+
+.table-wrapper { overflow: auto; }
+
+.ctx-btn {
+  background: var(--color-primary-100);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary-600);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.ctx-btn:hover { background: var(--color-primary); color: #fff; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+
+.ctx-menu { position: absolute; right: 0; top: 28px; background: var(--color-surface); border: 1px solid var(--color-border); padding: 6px; display: flex; flex-direction: column; gap: 4px; z-index: 20; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
+
+.delete-btn { background: #fff; border: 1px solid var(--color-border); padding: 6px 10px; cursor: pointer; border-radius: var(--radius-sm); transition: background 140ms ease, border-color 140ms ease, color 140ms ease; }
+.delete-btn:hover { background: #fee2e2; border-color: var(--color-danger); color: var(--color-danger); }
+
+.table-edit-qualification{
+  background-color: var(--color-surface-alt);
+}

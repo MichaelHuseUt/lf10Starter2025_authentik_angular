@@ -1,2 +1,38 @@
-<app-employee-list></app-employee-list>
+<div class="app-root">
+  <aside class="sidebar">
+    <div class="logo">LOGO</div>
+    <nav class="nav">
+      <a routerLink="/employees" routerLinkActive="active" class="nav-item">Mitarbeiter</a>
+      <a routerLink="/qualifications" routerLinkActive="active" class="nav-item">Qualifikationen</a>
+    </nav>
+    <div class="logout-button">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </aside>
 
+  <main class="main">
+    <!-- Employee header only on /employees -->
+    <header *ngIf="showEmployeeHeader" class="employee-header">
+      <h1>Mitarbeiter</h1>
+      <hr>
+    </header>
+    <header *ngIf="showQualificationHeader" class="qualification-header">
+      <h1>Qualifikationen</h1>
+      <hr>
+    </header>
+
+    <section class="content-area">
+      <div class="lower-box">
+        <div class="router-anchor">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  </main>
+  <aside class="notification">
+
+    <div *ngFor="let n of notificationList(); trackBy: trackById">
+      <app-custom-notification class="notification-pop-up" (deleteNotification)="deleteNotification(n.id)" [customNotification]="n" />
+    </div>
+  </aside>
+</div>

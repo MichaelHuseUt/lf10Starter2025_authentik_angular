@@ -1,0 +1,43 @@
+<div class="qualification-list-root">
+
+  <div class="table-wrapper">
+    <table class="qualification-table">
+      <thead>
+      <tr>
+        <th>Qualifikation</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (qualification of qualificationList | async; track qualification.id) {
+          @if (qualification.id === editQualification?.id) {
+            <tr class="table-edit-qualification">
+              <td><input [value]="qualification.skill" placeholder="Qualifikation" #qualificationInput></td>
+              <td>
+                <button class="ctx-btn" (click)="emitUpdateQualification(qualification.id!, qualificationInput.value)">
+                  Speichern
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" (click)="cancelEditQualification()">Abbrechen</button>
+              </td>
+            </tr>
+          } @else {
+            <tr class="table-qualification">
+              <td>{{ qualification.skill }}</td>
+              <td>
+                <button class="ctx-btn" (click)="setEditQualification(qualification)">Bearbeiten</button>
+              </td>
+              <td>
+                <button class="delete-btn" (click)="deleteQualification.emit(qualification.id)">Löschen</button>
+              </td>
+            </tr>
+
+          }
+        }
+      </tbody>
+    </table>
+
+  </div>
+</div>
