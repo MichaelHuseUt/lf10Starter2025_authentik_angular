@@ -7,6 +7,7 @@ import {Observable, of} from "rxjs";
 import {Qualification} from "../Qualification";
 import {FormsModule} from "@angular/forms";
 import {CustomQualificationSelectComponent} from "../custom-qualification-select/custom-qualification-select.component";
+import {NotificationService, NotificationState} from "../../service/notification/notification.service";
 
 @Component({
   selector: 'app-add-employee',
@@ -33,7 +34,7 @@ export class AddEmployeeComponent {
   selectedCityModal: string = ""
   selectedQualificationIdListModal: string[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService, private qualificationService: QualificationService) {
+  constructor(private http: HttpClient, private authService: AuthService, private qualificationService: QualificationService, private notificationServicce: NotificationService) {
     this.qualificationService.getAllQualifications().subscribe((q) => this.qualificationList$ = of(q))
   }
 
@@ -89,9 +90,15 @@ export class AddEmployeeComponent {
           headers: new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}`)
-        }).subscribe(() => {
+        }).subscribe({ next: (value) => {
+          this.notificationServicce.add(
+            NotificationState.SUCCESS,
+            "Mitarbeiter erfolgreich hinzugefügt",
+            `Der Mitarbeiter ${value.firstName} ${value.lastName} wurde hinzugefügt.`,
+          );
         this.closePopup.emit();
-      });
+      }
+    });
     }
   }
 
