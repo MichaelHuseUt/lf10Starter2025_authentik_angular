@@ -108,6 +108,7 @@ export class EmployeeListComponent implements OnChanges {
     this.showViewModal = false;
     this.viewEmployeeDetails = {};
     this.modalIsOpen = false;
+    this.fetchData();
   }
 
   edit(e: Employee) {
