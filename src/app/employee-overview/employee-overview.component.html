@@ -5,7 +5,7 @@
 <button class="button-add" (click)="openPopUp()">Mitarbeiter hinzufügen</button>
 
 <section class="employee-list">
-  <app-employee-list [overrideEmployees]="filteredFromFilter" (employeesLoaded)="onEmployeesLoaded($event)"></app-employee-list>
+  <app-employee-list [overrideEmployees]="filteredFromFilter" [reloadEmployees]="reloadEmployees" (employeesLoaded)="onEmployeesLoaded($event)"></app-employee-list>
 </section>
 
 @if (addEmployeeModalIsOpen) {

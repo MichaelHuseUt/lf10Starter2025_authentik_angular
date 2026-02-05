@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Observable, BehaviorSubject } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Employee } from "../Employee";
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BehaviorSubject, Observable} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Employee} from "../Employee";
 import {AuthService} from "../../service/auth/auth.service";
 import {ViewEmployeeComponent} from "../view-employee/view-employee.component";
 
@@ -15,6 +15,7 @@ import {ViewEmployeeComponent} from "../view-employee/view-employee.component";
 })
 export class EmployeeListComponent implements OnChanges {
   @Input() overrideEmployees: Employee[] | null = null;
+  @Input() reloadEmployees: number = 0;
   @Output() employeesLoaded = new EventEmitter<Employee[]>();
 
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
@@ -55,6 +56,12 @@ export class EmployeeListComponent implements OnChanges {
         // Override: zeige die bereitgestellte Liste
         this.employeesSubject.next(curr || []);
       }
+    }
+    console.log("chang Detected")
+    if (changes['reloadEmployees']) {
+      console.log("is reloade")
+      console.log("reload...")
+      this.fetchData();
     }
   }
 
@@ -167,7 +174,6 @@ export class EmployeeListComponent implements OnChanges {
       console.warn('Kein Zugriffstoken vorhanden - Backend-Aufruf könnte fehlschlagen.');
     }
 
-
     this.http.delete(`http://localhost:8089/employees/${id}`, {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -180,5 +186,5 @@ export class EmployeeListComponent implements OnChanges {
         console.error(`Fehler beim Löschen des Mitarbeiters mit ID ${id}`, err);
       }
     });
-   }
- }
+  }
+}
