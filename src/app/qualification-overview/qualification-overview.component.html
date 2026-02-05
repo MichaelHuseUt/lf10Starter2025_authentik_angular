@@ -1,16 +1,20 @@
 <section class="filter">
-  Suche:
-  <input
-    class="input"
-    type="text"
-    placeholder="nach Qualifikationen"
-    #filterInputElement
-    (keyup)="filterQualificationByUserInput(filterInputElement.value)"
-  >
+  <fieldset class="filter-box">
+    <legend>Suche</legend>
+    <form class="filter-row" (submit)="$event.preventDefault()">
+      <input
+        class="input"
+        type="text"
+        placeholder="nach Qualifikationen"
+        #filterInputElement
+        (keyup)="filterQualificationByUserInput(filterInputElement.value)"
+      >
+    </form>
+  </fieldset>
 </section>
 <div class="button-controls">
   <input class="input" placeholder="Qualifikation hinzufügen" type="text" #skillInput (keyup.enter)="addQualification(skillInput)">
-  <button class="button-add" (click)="addQualification(skillInput)">+</button>
+  <button class="button-add" (click)="addQualification(skillInput)">Hinzufügen</button>
 </div>
 <section class="qualification-list">
   <app-qualification-list

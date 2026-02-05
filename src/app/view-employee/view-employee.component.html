@@ -1,36 +1,47 @@
-<p>view-employee works!</p>
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close" (click)="closePopup.emit()">&times;</span>
 
     @if (isEditing || enterInEditMode) {
-      <form>
-        <div class="left-side">
-          <label for="first-name">Vorname </label>
+      <form class="edit-form">
+        <div class="employee-item first-name">
+          <label for="first-name">Vorname: </label>
           <br/>
-          <input name="first-name" id="first-name" class="employee-item" [(ngModel)]="firstNameModal" (keyup)="validateUserInput()">
-          <br/>
-          <label for="last-name">Nachname </label>
-          <br/>
-          <input name="last-name" id="last-name" class="employee-item" [(ngModel)]="lastNameModal" (keyup)="validateUserInput()">
-          <br/>
-          <label for="street">Straße </label>
-          <br/>
-          <input name="street" id="street" class="employee-item" [(ngModel)]="streetModal" (keyup)="validateUserInput()">
-          <br/>
-          <label for="post-code">Postleitzahl </label>
-          <br/>
-          <input name="post-code" id="post-code" class="employee-item" [(ngModel)]="postCodeModal" (keyup)="validateUserInput()">
-          <br/>
-          <label for="city">Stadt </label>
-          <br/>
-          <input name="city" id="city" class="employee-item" [(ngModel)]="cityModal" (keyup)="validateUserInput()">
-          <br/>
-          <label for="phone">Telefonnummer </label>
-          <br/>
-          <input name="phone" id="phone" class="employee-item" [(ngModel)]="phoneNumberModal" (keyup)="validateUserInput()">
+          <input name="first-name" id="first-name" [(ngModel)]="firstNameModal"
+                 (keyup)="validateUserInput()">
         </div>
-        <div class="right-side">
+        <div class="employee-item last-name">
+          <label for="last-name">Nachname: </label>
+          <br/>
+          <input name="last-name" id="last-name" [(ngModel)]="lastNameModal"
+                 (keyup)="validateUserInput()">
+
+        </div>
+        <div class="employee-item street">
+          <label for="street">Straße: </label>
+          <br/>
+          <input name="street" id="street" [(ngModel)]="streetModal"
+                 (keyup)="validateUserInput()">
+        </div>
+        <div class="employee-item post-code">
+          <label for="post-code">Postleitzahl: </label>
+          <br/>
+          <input name="post-code" id="post-code" [(ngModel)]="postCodeModal"
+                 (keyup)="validateUserInput()">
+        </div>
+        <div class="employee-item city">
+          <label for="city">Stadt: </label>
+          <br/>
+          <input name="city" id="city" [(ngModel)]="cityModal" (keyup)="validateUserInput()">
+        </div>
+        <div class="employee-item phone">
+          <label for="phone">Telefonnummer: </label>
+          <br/>
+          <input name="phone" id="phone" [(ngModel)]="phoneNumberModal"
+                 (keyup)="validateUserInput()">
+
+        </div>
+        <div class="employee-item qualification">
           <app-custom-qualification-select
             [qualificationList$]="qualificationList$"
             [enableSearchBar]="true"
@@ -39,64 +50,67 @@
           ></app-custom-qualification-select>
 
         </div>
+        <div class="footer">
+          <button [disabled]="errorMessageList.length" (click)="saveEdit()" class="save-button">speichern</button>
+          <button (click)="cancelEditMode()" class="cancel-button">abbrechen</button>
+          @if (errorMessageList.length) {
+            <div class="error-message-list">
+              <ul>
+                @for (errorMessage of errorMessageList; track $index) {
+                  <li class="error-message-list-item">{{ errorMessage }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
       </form>
     } @else {
-      <form>
-        <div class="left-side">
-          <label>Vorname </label>
+      <form class="view-form">
+        <div class="employee-item first-name">
+          <label>Vorname: </label>
           <br/>
-          <div class="employee-item"> {{employee.firstName}} </div>
-          <br/>
-          <label>Nachname </label>
-          <br/>
-          <div class="employee-item"> {{employee.lastName}} </div>
-          <br/>
-          <label>Straße </label>
-          <br/>
-          <div class="employee-item"> {{employee.street}} </div>
-          <br/>
-          <label>Postleitzahl </label>
-          <br/>
-          <div class="employee-item"> {{employee.postcode}} </div>
-          <br/>
-          <label>Stadt </label>
-          <br/>
-          <div class="employee-item"> {{employee.city}} </div>
-          <br/>
-          <label>Telefonnummer </label>
-          <br/>
-          <div class="employee-item"> {{employee.phone}} </div>
+          <div> {{ employee.firstName }}</div>
         </div>
-        <div class="right-side">
-          <span>Qualifikationen:</span>
+        <div class="employee-item last-name">
+          <label>Nachname: </label>
+          <br/>
+          <div> {{ employee.lastName }}</div>
+        </div>
+        <div class="employee-item street">
+          <label>Straße: </label>
+          <br/>
+          <div> {{ employee.street }}</div>
+        </div>
+        <div class="employee-item post-code">
+          <label>Postleitzahl: </label>
+          <br/>
+          <div> {{ employee.postcode }}</div>
+        </div>
+        <div class="employee-item city">
+          <label>Stadt: </label>
+          <br/>
+          <div> {{ employee.city }}</div>
+        </div>
+        <div class="employee-item phone">
+          <label>Telefonnummer: </label>
+          <br/>
+          <div> {{ employee.phone }}</div>
+        </div>
+        <div class="employee-item qualification">
+          <label>Qualifikationen:</label>
           <ul
           >
             @for (qualification of employee.skillSet; track qualification.id) {
-              <li >{{ qualification.skill }}</li>
+              <li>{{ qualification.skill }}</li>
             }
           </ul>
+        </div>
+        <div class="footer">
+          <button class="switch-button" (click)="switchToEditMode()">bearbeiten</button>
         </div>
       </form>
     }
 
-    <div class="footer">
-      @if (isEditing || enterInEditMode) {
-        <button [disabled]="errorMessageList.length" (click)="saveEdit()">speichern</button>
-        <button (click)="cancelEditMode()">abbrechen</button>
-        @if (errorMessageList.length) {
-          <div class="error-message-list">
-            <ul>
-              @for (errorMessage of errorMessageList; track $index){
-                <li class="error-message-list-item">{{errorMessage}}</li>
-              }
-            </ul>
-          </div>
-        }
-      } @else {
-        <button (click)="switchToEditMode()">bearbeiten</button>
-      }
-
-    </div>
 
   </div>
 </div>

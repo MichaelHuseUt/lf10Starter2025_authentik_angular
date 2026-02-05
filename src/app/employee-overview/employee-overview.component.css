@@ -1,19 +1,20 @@
 .filter {
-  height: 120px;
-  background: var(--muted);
-  border: 6px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: var(--radius-md);
+  padding: 0;
+  width: 100%;
 }
-
 
 .employee-list {
   flex: 1;
-  border: 6px solid #000;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: 12px;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -22,28 +23,28 @@
 }
 
 .button-add {
-  width: 40px;
+  width: auto;
   height: 40px;
-
   margin: 10px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid #18181a;
-  background: #fff;
-  border-radius: 8px;
-  color: #18181a;
-
-  font-size: 24px;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-
-  transition: background-color 200ms ease, color 200ms ease;
+  transition: background-color 200ms ease, color 200ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
 }
 
 .button-add:hover {
-  background-color: #18181a;
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
   color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
-

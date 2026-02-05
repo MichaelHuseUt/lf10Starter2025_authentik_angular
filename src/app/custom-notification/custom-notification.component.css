@@ -1,23 +1,23 @@
-
 .custom-notification {
-  margin: 1rem;
-  padding: 1rem 0 0 0;
+  margin: 0.75rem;
+  padding: 0.75rem 0 0 0;
   width: max-content;
   position: relative;
-  border-radius: 1rem;
+  border-radius: var(--radius-md);
   flex-direction: column;
   overflow: hidden;
+  box-shadow: var(--shadow-md);
   animation: nodification-faiding-in 500ms linear forwards;
 }
 
 .custom-notification-success {
-  background-color: #c9f69e;
-  border: solid 0.2rem #98cc4d;
+  background-color: #ecfdf5;
+  border: solid 1px #86efac;
 }
 
 .custom-notification-failed {
-  background-color: #f69e9e;
-  border: solid 0.2rem #cc4d4d;
+  background-color: #fef2f2;
+  border: solid 1px #fecaca;
 }
 
 .custom-notification-cancel-button {
@@ -25,24 +25,29 @@
   right: 0;
   top: 0;
   margin: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
 }
 
 .custom-notification-label {
-  padding: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
 }
 
 .custom-notification-message {
-  padding: 1rem;
+  padding: 0 1rem 0.75rem 1rem;
+  color: var(--color-text);
 }
 
 .custom-notification-progress-bar {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   width: 0;
-  background-color: #65868e;
-  height: 1rem;
+  background-color: var(--color-primary);
+  height: 0.35rem;
   display: flex;
 }
 
@@ -69,5 +74,3 @@
     opacity: 1;
   }
 }
-
-
