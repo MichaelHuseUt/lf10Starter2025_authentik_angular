@@ -4,6 +4,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } fro
 import { filter } from 'rxjs/operators';
 import {CustomNotification, NotificationService} from "../service/notification/notification.service";
 import {CustomNotificationComponent} from "./custom-notification/custom-notification.component";
+import {AuthService} from "../service/auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   showQualificationHeader = false;
   notificationList = computed(() => this.notificationService.notificationList());
 
-  constructor(private router: Router, private notificationService: NotificationService) {
+  constructor(private router: Router, private notificationService: NotificationService, private authService: AuthService,) {
 
     this.showEmployeeHeader = this.router.url.startsWith('/employees');
     this.showQualificationHeader = this.router.url.startsWith('/qualifications');
@@ -29,6 +30,10 @@ export class AppComponent {
       this.showEmployeeHeader = event.urlAfterRedirects.startsWith('/employees');
       this.showQualificationHeader = event.urlAfterRedirects.startsWith('/qualifications');
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   trackById(_: number, item: CustomNotification) { return item.id; }
